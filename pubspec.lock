@@ -354,13 +354,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.2"
-  pigment:
-    dependency: transitive
-    description:
-      name: pigment
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   pool:
     dependency: transitive
     description:
@@ -478,13 +471,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
-  tinycolor:
-    dependency: "direct main"
-    description:
-      name: tinycolor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   typed_data:
     dependency: transitive
     description:
@@ -522,4 +508,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.10.0 <2.11.0"
-  flutter: ">=1.16.0 <3.0.0"
+  flutter: ">=1.16.0"
