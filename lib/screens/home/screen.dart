@@ -21,7 +21,12 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Hexa(color: state.color),
+                          Hexa(
+                            color: state.color,
+                            onInputHexadecimal: (hexa) {
+                              context.read<ColorCubit>().updateHexa(hexa);
+                            },
+                          ),
                           SizedBox(height: 60),
                           Row(
                             children: [
@@ -124,20 +129,63 @@ class HomeScreen extends StatelessWidget {
 
 class Hexa extends StatelessWidget {
   final Color color;
+  final Function(String hexa) onInputHexadecimal;
 
   const Hexa({
     Key key,
     this.color,
+    this.onInputHexadecimal,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _colorString = color.toString().substring(10, 16).toUpperCase();
+
     return SelectableText(
-      '#' + color.toString().substring(10, 16).toUpperCase(),
+      '#' + _colorString,
+      onTap: () {
+        _showHexaDialog(context, _colorString);
+      },
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
         color: color.computeLuminance() > .5 ? Colors.black : Colors.white,
+      ),
+    );
+  }
+
+  _showHexaDialog(BuildContext context, String color) {
+    final _focusNode = FocusNode();
+    final _inputController = TextEditingController(
+      text: color,
+    );
+
+    _focusNode.requestFocus();
+
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text('Input value'),
+        content: TextFormField(
+          focusNode: _focusNode,
+          controller: _inputController,
+          decoration: InputDecoration(labelText: 'Color value'),
+        ),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              if (_inputController.text.isNotEmpty &&
+                  _inputController.text != color) {
+                final _hexaValue = _inputController.text;
+
+                onInputHexadecimal(_hexaValue);
+              }
+
+              Navigator.pop(context);
+            },
+            child: Text('Ok'),
+          ),
+        ],
       ),
     );
   }
