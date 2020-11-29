@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 part 'color_state.dart';
 part 'color_cubit.freezed.dart';
@@ -10,40 +9,52 @@ class ColorCubit extends Cubit<ColorState> {
   ColorCubit() : super(ColorState.initial());
 
   updateRed(int red) {
-    final _color = TinyColor.fromRGB(
-      r: red,
-      g: state.color.green,
-      b: state.color.blue,
-    ).color;
+    final _previousColor = state.color;
 
-    print(red);
+    final _newColor = _getColor(
+      red,
+      _previousColor.green,
+      _previousColor.blue,
+    );
 
-    emit(ColorState.color(_color));
+    _updateColor(_newColor);
   }
 
   updateGreen(int green) {
-    final _color = TinyColor.fromRGB(
-      r: state.color.red,
-      g: green,
-      b: state.color.blue,
-    ).color;
+    final _previousColor = state.color;
 
-    emit(ColorState.color(_color));
+    final _newColor = _getColor(
+      _previousColor.red,
+      green,
+      _previousColor.blue,
+    );
+
+    _updateColor(_newColor);
   }
 
   updateBlue(int blue) {
-    final _color = TinyColor.fromRGB(
-      r: state.color.red,
-      g: state.color.green,
-      b: blue,
-    ).color;
+    final _previousColor = state.color;
 
-    emit(ColorState.color(_color));
+    final _newColor = _getColor(
+      _previousColor.red,
+      _previousColor.green,
+      blue,
+    );
+
+    _updateColor(_newColor);
   }
 
-  fromHexa(String hex) {
-    final _color = TinyColor.fromString(hex).color;
+  /* fromHexa(String hex) {
+    final _color = fromString(hex).color;
 
     emit(ColorState.color(_color));
+  } */
+
+  _updateColor(Color color) {
+    emit(ColorState.color(color));
+  }
+
+  Color _getColor(int red, int green, int blue) {
+    return Color.fromRGBO(red, green, blue, 1);
   }
 }
