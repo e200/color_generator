@@ -1,6 +1,7 @@
 import 'package:color_generator/cubit/color_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,6 +32,9 @@ class HomeScreen extends StatelessWidget {
                                   onChange: (value) {
                                     context.read<ColorCubit>().updateRed(value);
                                   },
+                                  onInputValue: (value) {
+                                    context.read<ColorCubit>().updateRed(value);
+                                  },
                                 ),
                               ),
                               Expanded(
@@ -42,6 +46,11 @@ class HomeScreen extends StatelessWidget {
                                         .read<ColorCubit>()
                                         .updateGreen(value);
                                   },
+                                  onInputValue: (value) {
+                                    context
+                                        .read<ColorCubit>()
+                                        .updateGreen(value);
+                                  },
                                 ),
                               ),
                               Expanded(
@@ -49,6 +58,11 @@ class HomeScreen extends StatelessWidget {
                                   activeColor: Colors.blue,
                                   value: state.color.blue,
                                   onChange: (value) {
+                                    context
+                                        .read<ColorCubit>()
+                                        .updateBlue(value);
+                                  },
+                                  onInputValue: (value) {
                                     context
                                         .read<ColorCubit>()
                                         .updateBlue(value);
@@ -97,6 +111,7 @@ class ColorSlider extends StatelessWidget {
   final Color activeColor;
   final Function(int value) onChange;
   final Function(int value) onInputValue;
+  final Function() onLongPressLabel;
 
   const ColorSlider({
     Key key,
@@ -104,6 +119,7 @@ class ColorSlider extends StatelessWidget {
     this.activeColor,
     this.onChange,
     this.onInputValue,
+    this.onLongPressLabel,
   }) : super(key: key);
 
   @override
@@ -113,18 +129,19 @@ class ColorSlider extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        GestureDetector(
+        FlatButton(
+          highlightColor: contrastColor(_color).withOpacity(.1),
+          splashColor: activeColor.withOpacity(.2),
           child: Text(
             value.toString(),
             style: TextStyle(
-              color:
-                  _color.computeLuminance() > .5 ? Colors.black : Colors.white,
+              color: contrastColor(_color),
               fontWeight: FontWeight.bold,
             ),
           ),
-          onTap: () {},
+          onLongPress: onLongPressLabel,
         ),
-        SizedBox(height: 30),
+        SizedBox(height: 15),
         RotatedBox(
           quarterTurns: 3,
           child: CupertinoSlider(
@@ -138,4 +155,7 @@ class ColorSlider extends StatelessWidget {
       ],
     );
   }
+
+  Color contrastColor(Color color) =>
+      color.computeLuminance() > .5 ? Colors.black : Colors.white;
 }
