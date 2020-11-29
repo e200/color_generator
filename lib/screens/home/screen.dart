@@ -7,90 +7,59 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          BlocBuilder<ColorCubit, ColorState>(
-            builder: (context, state) {
-              return Container(
-                color: state.color,
-              );
-            },
-          ),
-          SafeArea(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    BlocBuilder<ColorCubit, ColorState>(
-                      builder: (context, state) {
-                        return Hexa(color: state.color);
-                      },
-                    ),
-                    SizedBox(height: 60),
-                    Row(
+      body: BlocBuilder<ColorCubit, ColorState>(
+        builder: (context, state) {
+          return Stack(
+            children: [
+              Container(color: state.color),
+              SafeArea(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: Builder(
-                            builder: (context) {
-                              final _value = context.select<ColorCubit, int>(
-                                (value) => value.state.color.red,
-                              );
-
-                              return ColorSlider(
+                        Hexa(color: state.color),
+                        SizedBox(height: 60),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ColorSlider(
                                 activeColor: Colors.red,
-                                value: _value,
+                                value: state.color.red,
                                 onChange: (value) {
                                   context.read<ColorCubit>().updateRed(value);
                                 },
-                              );
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: Builder(
-                            builder: (context) {
-                              final _value = context.select<ColorCubit, int>(
-                                (value) => value.state.color.green,
-                              );
-
-                              return ColorSlider(
+                              ),
+                            ),
+                            Expanded(
+                              child: ColorSlider(
                                 activeColor: Colors.green,
-                                value: _value,
+                                value: state.color.green,
                                 onChange: (value) {
                                   context.read<ColorCubit>().updateGreen(value);
                                 },
-                              );
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: Builder(
-                            builder: (context) {
-                              final _value = context.select<ColorCubit, int>(
-                                (value) => value.state.color.blue,
-                              );
-
-                              return ColorSlider(
+                              ),
+                            ),
+                            Expanded(
+                              child: ColorSlider(
                                 activeColor: Colors.blue,
-                                value: _value,
+                                value: state.color.blue,
                                 onChange: (value) {
                                   context.read<ColorCubit>().updateBlue(value);
                                 },
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
@@ -121,25 +90,33 @@ class ColorSlider extends StatelessWidget {
   final int value;
   final Color activeColor;
   final Function(int value) onChange;
+  final Function(int value) onInputValue;
 
   const ColorSlider({
     Key key,
     this.value,
     this.activeColor,
     this.onChange,
+    this.onInputValue,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _color = context.watch<ColorCubit>().state.color;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          value.toString(),
-          style: TextStyle(
-            color: Colors.grey,
-            fontWeight: FontWeight.bold,
+        GestureDetector(
+          child: Text(
+            value.toString(),
+            style: TextStyle(
+              color:
+                  _color.computeLuminance() > .5 ? Colors.black : Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          onTap: () {},
         ),
         SizedBox(height: 30),
         RotatedBox(
