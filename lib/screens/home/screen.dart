@@ -81,7 +81,7 @@ class Hexa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return SelectableText(
       '#' + color.toString().substring(10, 16).toUpperCase(),
       style: TextStyle(
         fontSize: 32,
