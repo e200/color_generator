@@ -35,6 +35,12 @@ class HomeScreen extends StatelessWidget {
                                   onInputValue: (value) {
                                     context.read<ColorCubit>().updateRed(value);
                                   },
+                                  onLongPressLabel: () {
+                                    _setClipboardText(
+                                      context,
+                                      state.color.red.toString(),
+                                    );
+                                  },
                                 ),
                               ),
                               Expanded(
@@ -50,6 +56,12 @@ class HomeScreen extends StatelessWidget {
                                     context
                                         .read<ColorCubit>()
                                         .updateGreen(value);
+                                  },
+                                  onLongPressLabel: () {
+                                    _setClipboardText(
+                                      context,
+                                      state.color.green.toString(),
+                                    );
                                   },
                                 ),
                               ),
@@ -67,6 +79,12 @@ class HomeScreen extends StatelessWidget {
                                         .read<ColorCubit>()
                                         .updateBlue(value);
                                   },
+                                  onLongPressLabel: () {
+                                    _setClipboardText(
+                                      context,
+                                      state.color.blue.toString(),
+                                    );
+                                  },
                                 ),
                               ),
                             ],
@@ -82,6 +100,25 @@ class HomeScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  _setClipboardText(BuildContext context, String text) async {
+    Scaffold.of(context).hideCurrentSnackBar();
+
+    await Clipboard.setData(ClipboardData(text: text));
+
+    final _snackbar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: Row(
+        children: [
+          Icon(Icons.assignment),
+          SizedBox(width: 15),
+          Text('Value copied to clipboard'),
+        ],
+      ),
+    );
+
+    Scaffold.of(context).showSnackBar(_snackbar);
   }
 }
 
@@ -139,6 +176,9 @@ class ColorSlider extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          onPressed: () {
+            _showInputValueDialog(context);
+          },
           onLongPress: onLongPressLabel,
         ),
         SizedBox(height: 15),
@@ -158,4 +198,49 @@ class ColorSlider extends StatelessWidget {
 
   Color contrastColor(Color color) =>
       color.computeLuminance() > .5 ? Colors.black : Colors.white;
+
+  _showInputValueDialog(BuildContext context) {
+    final _focusNode = FocusNode();
+    final _inputController = TextEditingController(
+      text: value.toString(),
+    );
+
+    _focusNode.requestFocus();
+
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text('Input value'),
+        content: TextFormField(
+          focusNode: _focusNode,
+          controller: _inputController,
+          decoration: InputDecoration(labelText: 'Color value'),
+          keyboardType: TextInputType.numberWithOptions(
+            decimal: false,
+            signed: false,
+          ),
+        ),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              if (_inputController.text.isNotEmpty &&
+                  _inputController.text != value.toString()) {
+                final _intValue = int.parse(_inputController.text);
+
+                onInputValue(_intValue);
+              }
+
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Ok',
+              style: TextStyle(
+                color: activeColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
