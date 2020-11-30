@@ -130,11 +130,12 @@ class Hexa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _colorString = color.toString().substring(10, 16).toUpperCase();
+    final _hexaColorString = '#' + _colorString;
 
     return SelectableText(
-      '#' + _colorString,
+      _hexaColorString,
       onTap: () {
-        _showHexaDialog(context, _colorString);
+        _showHexaDialog(context, _hexaColorString);
       },
       style: TextStyle(
         fontSize: 32,
