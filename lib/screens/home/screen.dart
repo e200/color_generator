@@ -225,6 +225,7 @@ class ColorSlider extends StatelessWidget {
           child: CupertinoSlider(
             min: 0,
             max: 255,
+            thumbColor: activeColor,
             activeColor: activeColor.withOpacity(.5),
             value: value.toDouble(),
             onChanged: (value) => onChange(value.toInt()),
