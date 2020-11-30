@@ -7,102 +7,92 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<ColorCubit>().state;
+
     return Scaffold(
-      body: BlocBuilder<ColorCubit, ColorState>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              Container(color: state.color),
-              SafeArea(
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
+      body: Stack(
+        children: [
+          Container(color: state.color),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Hexa(
+                        color: state.color,
+                        onInputHexadecimal: (hexa) {
+                          context.read<ColorCubit>().updateHexa(hexa);
+                        },
+                      ),
+                      SizedBox(height: 60),
+                      Row(
                         children: [
-                          Hexa(
-                            color: state.color,
-                            onInputHexadecimal: (hexa) {
-                              context.read<ColorCubit>().updateHexa(hexa);
-                            },
+                          Expanded(
+                            child: ColorSlider(
+                              activeColor: Colors.red,
+                              value: state.color.red,
+                              onChange: (value) {
+                                context.read<ColorCubit>().updateRed(value);
+                              },
+                              onInputValue: (value) {
+                                context.read<ColorCubit>().updateRed(value);
+                              },
+                              onLongPressLabel: () {
+                                _setClipboardText(
+                                  context,
+                                  state.color.red.toString(),
+                                );
+                              },
+                            ),
                           ),
-                          SizedBox(height: 60),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ColorSlider(
-                                  activeColor: Colors.red,
-                                  value: state.color.red,
-                                  onChange: (value) {
-                                    context.read<ColorCubit>().updateRed(value);
-                                  },
-                                  onInputValue: (value) {
-                                    context.read<ColorCubit>().updateRed(value);
-                                  },
-                                  onLongPressLabel: () {
-                                    _setClipboardText(
-                                      context,
-                                      state.color.red.toString(),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: ColorSlider(
-                                  activeColor: Colors.green,
-                                  value: state.color.green,
-                                  onChange: (value) {
-                                    context
-                                        .read<ColorCubit>()
-                                        .updateGreen(value);
-                                  },
-                                  onInputValue: (value) {
-                                    context
-                                        .read<ColorCubit>()
-                                        .updateGreen(value);
-                                  },
-                                  onLongPressLabel: () {
-                                    _setClipboardText(
-                                      context,
-                                      state.color.green.toString(),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: ColorSlider(
-                                  activeColor: Colors.blue,
-                                  value: state.color.blue,
-                                  onChange: (value) {
-                                    context
-                                        .read<ColorCubit>()
-                                        .updateBlue(value);
-                                  },
-                                  onInputValue: (value) {
-                                    context
-                                        .read<ColorCubit>()
-                                        .updateBlue(value);
-                                  },
-                                  onLongPressLabel: () {
-                                    _setClipboardText(
-                                      context,
-                                      state.color.blue.toString(),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
+                          Expanded(
+                            child: ColorSlider(
+                              activeColor: Colors.green,
+                              value: state.color.green,
+                              onChange: (value) {
+                                context.read<ColorCubit>().updateGreen(value);
+                              },
+                              onInputValue: (value) {
+                                context.read<ColorCubit>().updateGreen(value);
+                              },
+                              onLongPressLabel: () {
+                                _setClipboardText(
+                                  context,
+                                  state.color.green.toString(),
+                                );
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: ColorSlider(
+                              activeColor: Colors.blue,
+                              value: state.color.blue,
+                              onChange: (value) {
+                                context.read<ColorCubit>().updateBlue(value);
+                              },
+                              onInputValue: (value) {
+                                context.read<ColorCubit>().updateBlue(value);
+                              },
+                              onLongPressLabel: () {
+                                _setClipboardText(
+                                  context,
+                                  state.color.blue.toString(),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
