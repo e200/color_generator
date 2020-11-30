@@ -6,4 +6,4 @@ A Flutter color generator app built with Cubit + Freezed
 
 This a application generates color from RGB and Hexadecimal values.
 
-[Screenshot](screenshots/home.png)
+![Screenshot](screenshots/home.png)
