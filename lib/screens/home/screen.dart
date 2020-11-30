@@ -135,48 +135,16 @@ class Hexa extends StatelessWidget {
     return SelectableText(
       _hexaColorString,
       onTap: () {
-        _showHexaDialog(context, _hexaColorString);
+        _showValuePickerDialog(
+          context: context,
+          initialValue: _hexaColorString,
+          onSubmit: onInputHexadecimal,
+        );
       },
       style: TextStyle(
         fontSize: 32,
         fontWeight: FontWeight.bold,
         color: color.computeLuminance() > .5 ? Colors.black : Colors.white,
-      ),
-    );
-  }
-
-  _showHexaDialog(BuildContext context, String color) {
-    final _focusNode = FocusNode();
-    final _inputController = TextEditingController(
-      text: color,
-    );
-
-    _focusNode.requestFocus();
-
-    showDialog(
-      context: context,
-      child: AlertDialog(
-        title: Text('Input value'),
-        content: TextFormField(
-          focusNode: _focusNode,
-          controller: _inputController,
-          decoration: InputDecoration(labelText: 'Color value'),
-        ),
-        actions: [
-          FlatButton(
-            onPressed: () {
-              if (_inputController.text.isNotEmpty &&
-                  _inputController.text != color) {
-                final _hexaValue = _inputController.text;
-
-                onInputHexadecimal(_hexaValue);
-              }
-
-              Navigator.pop(context);
-            },
-            child: Text('Ok'),
-          ),
-        ],
       ),
     );
   }
@@ -216,7 +184,19 @@ class ColorSlider extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            _showInputValueDialog(context);
+            _showValuePickerDialog(
+              context: context,
+              initialValue: _color.toString(),
+              inputType: TextInputType.numberWithOptions(
+                decimal: false,
+                signed: false,
+              ),
+              onSubmit: (value) {
+                final _intColor = int.parse(value);
+
+                onInputValue(_intColor);
+              },
+            );
           },
           onLongPress: onLongPressLabel,
         ),
@@ -238,49 +218,45 @@ class ColorSlider extends StatelessWidget {
 
   Color contrastColor(Color color) =>
       color.computeLuminance() > .5 ? Colors.black : Colors.white;
+}
 
-  _showInputValueDialog(BuildContext context) {
-    final _focusNode = FocusNode();
-    final _inputController = TextEditingController(
-      text: value.toString(),
-    );
+_showValuePickerDialog({
+  BuildContext context,
+  String initialValue,
+  Function(String value) onSubmit,
+  TextInputType inputType,
+}) {
+  final _focusNode = FocusNode();
+  final _inputController = TextEditingController(
+    text: initialValue,
+  );
 
-    _focusNode.requestFocus();
+  _focusNode.requestFocus();
 
-    showDialog(
-      context: context,
-      child: AlertDialog(
-        title: Text('Input value'),
-        content: TextFormField(
-          focusNode: _focusNode,
-          controller: _inputController,
-          decoration: InputDecoration(labelText: 'Color value'),
-          keyboardType: TextInputType.numberWithOptions(
-            decimal: false,
-            signed: false,
-          ),
-        ),
-        actions: [
-          FlatButton(
-            onPressed: () {
-              if (_inputController.text.isNotEmpty &&
-                  _inputController.text != value.toString()) {
-                final _intValue = int.parse(_inputController.text);
-
-                onInputValue(_intValue);
-              }
-
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Ok',
-              style: TextStyle(
-                color: activeColor,
-              ),
-            ),
-          ),
-        ],
+  showDialog(
+    context: context,
+    child: AlertDialog(
+      title: Text('Input value'),
+      content: TextFormField(
+        focusNode: _focusNode,
+        controller: _inputController,
+        decoration: InputDecoration(labelText: 'Color value'),
+        keyboardType: inputType,
       ),
-    );
-  }
+      actions: [
+        FlatButton(
+          onPressed: () {
+            final _value = _inputController.text;
+
+            if (_value.isNotEmpty && _value != initialValue) {
+              onSubmit(_value);
+            }
+
+            Navigator.pop(context);
+          },
+          child: Text('Ok'),
+        ),
+      ],
+    ),
+  );
 }
