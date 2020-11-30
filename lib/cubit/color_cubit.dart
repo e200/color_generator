@@ -45,8 +45,8 @@ class ColorCubit extends Cubit<ColorState> {
   }
 
   updateHexa(String hex) {
-    final _colorInt = int.parse('0xFF$hex');
-    final _newColor = Color(_colorInt);
+    final _intColor = int.parse('0xFF$hex');
+    final _newColor = Color(_intColor);
 
     _updateColor(_newColor);
   }
