@@ -1,5 +1,5 @@
 import 'package:color_generator/cubit/color_cubit.dart';
-import 'package:color_generator/screens/home/widgets/color_slider.dart';
+import 'package:color_generator/screens/home/widgets/color_sliders.dart';
 import 'package:color_generator/screens/home/widgets/hexa.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,120 +28,13 @@ class HomeScreen extends StatelessWidget {
                           Hexa(
                             color: _color,
                             onChanged: (String hexadecimal) {
-                              context.read<ColorCubit>().updateHexa(hexadecimal);
+                              context
+                                  .read<ColorCubit>()
+                                  .updateHexa(hexadecimal);
                             },
                           ),
                           SizedBox(height: 60),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ColorSlider(
-                                  colorName: 'Red',
-                                  activeColor: Colors.red,
-                                  value: _color.red,
-                                  onChange: (value) {
-                                    context.read<ColorCubit>().updateRed(value);
-                                  },
-                                  onTapLabel: () {
-                                    _setClipboardText(
-                                      context,
-                                      _color.red.toString(),
-                                    );
-                                  },
-                                  onLongPressLabel: () {
-                                    _showValuePickerDialog(
-                                      context: context,
-                                      initialValue: _color.red.toString(),
-                                      inputType:
-                                          TextInputType.numberWithOptions(
-                                        decimal: false,
-                                        signed: false,
-                                      ),
-                                      onSubmit: (value) {
-                                        final _intColor = int.parse(value);
-
-                                        context
-                                            .read<ColorCubit>()
-                                            .updateRed(_intColor);
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: ColorSlider(
-                                  colorName: 'Green',
-                                  activeColor: Colors.green,
-                                  value: _color.green,
-                                  onChange: (value) {
-                                    context
-                                        .read<ColorCubit>()
-                                        .updateGreen(value);
-                                  },
-                                  onTapLabel: () {
-                                    _setClipboardText(
-                                      context,
-                                      _color.green.toString(),
-                                    );
-                                  },
-                                  onLongPressLabel: () {
-                                    _showValuePickerDialog(
-                                      context: context,
-                                      initialValue: _color.green.toString(),
-                                      inputType:
-                                          TextInputType.numberWithOptions(
-                                        decimal: false,
-                                        signed: false,
-                                      ),
-                                      onSubmit: (value) {
-                                        final _intColor = int.parse(value);
-
-                                        context
-                                            .read<ColorCubit>()
-                                            .updateGreen(_intColor);
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: ColorSlider(
-                                  colorName: 'Blue',
-                                  activeColor: Colors.blue,
-                                  value: _color.blue,
-                                  onChange: (value) {
-                                    context
-                                        .read<ColorCubit>()
-                                        .updateBlue(value);
-                                  },
-                                  onTapLabel: () {
-                                    _setClipboardText(
-                                      context,
-                                      _color.blue.toString(),
-                                    );
-                                  },
-                                  onLongPressLabel: () {
-                                    _showValuePickerDialog(
-                                      context: context,
-                                      initialValue: _color.blue.toString(),
-                                      inputType:
-                                          TextInputType.numberWithOptions(
-                                        decimal: false,
-                                        signed: false,
-                                      ),
-                                      onSubmit: (value) {
-                                        final _intColor = int.parse(value);
-
-                                        context
-                                            .read<ColorCubit>()
-                                            .updateBlue(_intColor);
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                          ColorSliders(color: _color),
                         ],
                       ),
                     ),
