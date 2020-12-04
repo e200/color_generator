@@ -15,6 +15,7 @@ class Hexa extends StatelessWidget {
     final _hexa = getHexadecimalFromColor(color);
 
     return TextFormField(
+      key: UniqueKey(),
       textAlign: TextAlign.center,
       initialValue: _hexa,
       decoration: InputDecoration(
