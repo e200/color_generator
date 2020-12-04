@@ -1,54 +1,46 @@
+import 'package:color_generator/screens/home/widgets/color_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:color_generator/cubit/color_cubit.dart';
 
 class ColorSlider extends StatelessWidget {
   final String colorName;
+  final Color color;
   final int value;
   final Color activeColor;
-  final Function(int value) onChange;
-  final Function() onTapLabel;
-  final Function(int value) onInputValue;
-  final Function() onLongPressLabel;
+  final Function(int value) onChanged;
 
   const ColorSlider({
     Key key,
+    this.color,
     this.colorName,
     this.value,
     this.activeColor,
-    this.onChange,
-    this.onTapLabel,
-    this.onInputValue,
-    this.onLongPressLabel,
+    this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _color = context.watch<ColorCubit>().state.color;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          colorName[0],
-          style: TextStyle(
-            color: Colors.grey.withOpacity(.6),
-            fontWeight: FontWeight.bold,
+        Container(
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.black.withOpacity(.1),
           ),
-        ),
-        FlatButton(
-          highlightColor: contrastColor(_color).withOpacity(.1),
-          splashColor: activeColor.withOpacity(.2),
           child: Text(
-            value.toString(),
+            colorName[0],
             style: TextStyle(
-              color: contrastColor(_color),
+              color: Colors.white.withOpacity(.6),
               fontWeight: FontWeight.bold,
             ),
           ),
-          onPressed: onTapLabel,
-          onLongPress: onLongPressLabel,
+        ),
+        ColorTextField(
+          color: color,
+          value: value.toString(),
+          onChanged: (value) => onChanged(int.parse(value)),
         ),
         SizedBox(height: 15),
         RotatedBox(
@@ -59,7 +51,7 @@ class ColorSlider extends StatelessWidget {
             thumbColor: activeColor,
             activeColor: activeColor.withOpacity(.5),
             value: value.toDouble(),
-            onChanged: (value) => onChange(value.toInt()),
+            onChanged: (value) => onChanged(value.toInt()),
           ),
         ),
       ],
