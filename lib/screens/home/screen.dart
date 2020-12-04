@@ -1,4 +1,6 @@
 import 'package:color_generator/cubit/color_cubit.dart';
+import 'package:color_generator/screens/home/widgets/color_slider.dart';
+import 'package:color_generator/screens/home/widgets/hexa.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,19 +27,8 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Hexa(
                             color: _color,
-                            onTap: () {
-                              final _hexa = getHexadecimalFromColor(_color);
-
-                              _setClipboardText(context, _hexa);
-                            },
-                            onLongPress: () {
-                              _showValuePickerDialog(
-                                context: context,
-                                initialValue: getHexadecimalFromColor(_color),
-                                onSubmit: (hexa) {
-                                  context.read<ColorCubit>().updateHexa(hexa);
-                                },
-                              );
+                            onChanged: (String hexadecimal) {
+                              context.read<ColorCubit>().updateHexa(hexadecimal);
                             },
                           ),
                           SizedBox(height: 60),
@@ -185,104 +176,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class Hexa extends StatelessWidget {
-  final Color color;
-  final Function() onTap;
-  final Function() onLongPress;
-
-  const Hexa({
-    Key key,
-    this.color,
-    this.onTap,
-    this.onLongPress,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final _hexa = getHexadecimalFromColor(color);
-
-    return GestureDetector(
-      onLongPress: onLongPress,
-      child: SelectableText(
-        _hexa,
-        onTap: onTap,
-        style: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.bold,
-          color: color.computeLuminance() > .5 ? Colors.black : Colors.white,
-        ),
-      ),
-    );
-  }
-}
-
-class ColorSlider extends StatelessWidget {
-  final String colorName;
-  final int value;
-  final Color activeColor;
-  final Function(int value) onChange;
-  final Function() onTapLabel;
-  final Function(int value) onInputValue;
-  final Function() onLongPressLabel;
-
-  const ColorSlider({
-    Key key,
-    this.colorName,
-    this.value,
-    this.activeColor,
-    this.onChange,
-    this.onTapLabel,
-    this.onInputValue,
-    this.onLongPressLabel,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final _color = context.watch<ColorCubit>().state.color;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          colorName[0],
-          style: TextStyle(
-            color: Colors.grey.withOpacity(.6),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        FlatButton(
-          highlightColor: contrastColor(_color).withOpacity(.1),
-          splashColor: activeColor.withOpacity(.2),
-          child: Text(
-            value.toString(),
-            style: TextStyle(
-              color: contrastColor(_color),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: onTapLabel,
-          onLongPress: onLongPressLabel,
-        ),
-        SizedBox(height: 15),
-        RotatedBox(
-          quarterTurns: 3,
-          child: CupertinoSlider(
-            min: 0,
-            max: 255,
-            thumbColor: activeColor,
-            activeColor: activeColor.withOpacity(.5),
-            value: value.toDouble(),
-            onChanged: (value) => onChange(value.toInt()),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Color contrastColor(Color color) =>
-      color.computeLuminance() > .5 ? Colors.black : Colors.white;
-}
-
 _showValuePickerDialog({
   BuildContext context,
   String initialValue,
@@ -322,11 +215,4 @@ _showValuePickerDialog({
       ],
     ),
   );
-}
-
-String getHexadecimalFromColor(Color color) {
-  final _colorString = color.toString().substring(10, 16).toUpperCase();
-  final _hexaColorString = '#' + _colorString;
-
-  return _hexaColorString;
 }
