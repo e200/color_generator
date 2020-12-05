@@ -1,11 +1,11 @@
 import 'package:color_generator/screens/home/widgets/color_text_field.dart';
 import 'package:flutter/material.dart';
 
-class Hexa extends StatelessWidget {
+class HexadecimalColorTextField extends StatelessWidget {
   final Color color;
   final Function(String hexadecimal) onChanged;
 
-  const Hexa({
+  const HexadecimalColorTextField({
     Key key,
     this.color,
     this.onChanged,
