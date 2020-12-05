@@ -30,11 +30,11 @@ class HomeScreen extends StatelessWidget {
                             onChanged: (String hexadecimal) {
                               context
                                   .read<ColorCubit>()
-                                  .updateHexa(hexadecimal);
+                                  .updateHexadecimal(hexadecimal);
                             },
                           ),
                           SizedBox(height: 60),
-                          ColorSliders(color: _color),
+                          ColorSliders(),
                         ],
                       ),
                     ),
