@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:color_generator/services/coolor.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -6,62 +7,35 @@ part 'color_state.dart';
 part 'color_cubit.freezed.dart';
 
 class ColorCubit extends Cubit<ColorState> {
-  ColorCubit() : super(ColorState.initial());
+  final ICoolor coolor;
+
+  ColorCubit({this.coolor}) : super(ColorState.initial());
 
   updateRed(int red) {
-    final _previousColor = state.color;
-
-    final _newColor = _getColor(
-      red,
-      _previousColor.green,
-      _previousColor.blue,
-    );
+    final _newColor = state.color.withRed(red);
 
     _updateColor(_newColor);
   }
 
   updateGreen(int green) {
-    final _previousColor = state.color;
-
-    final _newColor = _getColor(
-      _previousColor.red,
-      green,
-      _previousColor.blue,
-    );
+    final _newColor = state.color.withGreen(green);
 
     _updateColor(_newColor);
   }
 
   updateBlue(int blue) {
-    final _previousColor = state.color;
-
-    final _newColor = _getColor(
-      _previousColor.red,
-      _previousColor.green,
-      blue,
-    );
+    final _newColor = state.color.withBlue(blue);
 
     _updateColor(_newColor);
   }
 
-  updateHexa(String hex) {
-    String _hex = hex;
+  updateHexadecimal(String hexadecimal) {
+    final _color = coolor.fromHexadecimal(hexadecimal);
 
-    if (_hex.startsWith('#')) {
-      _hex = _hex.replaceAll('#', '');
-    }
-
-    final _intColor = int.parse('0xFF$_hex');
-    final _newColor = Color(_intColor);
-
-    _updateColor(_newColor);
+    _updateColor(_color);
   }
 
   _updateColor(Color color) {
     emit(ColorState.color(color));
-  }
-
-  Color _getColor(int red, int green, int blue) {
-    return Color.fromRGBO(red, green, blue, 1);
   }
 }
