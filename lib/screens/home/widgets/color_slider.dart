@@ -29,6 +29,8 @@ class _ColorSliderState extends State<ColorSlider>
 
   @override
   void initState() {
+    super.initState();
+
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(
@@ -36,16 +38,14 @@ class _ColorSliderState extends State<ColorSlider>
       ),
     );
 
-    _setupAnimation(0, 255);
-
-    super.initState();
+    _setupAnimation(0, widget.value);
   }
 
   _setupAnimation(int from, int to) {
     _animation = IntTween(begin: from, end: to).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Curves.bounceInOut,
+        curve: Curves.ease,
       ),
     );
 
@@ -58,11 +58,18 @@ class _ColorSliderState extends State<ColorSlider>
 
   @override
   void didUpdateWidget(covariant ColorSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
     if (oldWidget.value != widget.value) {
       _setupAnimation(oldWidget.value, widget.value);
     }
+  }
 
-    super.didUpdateWidget(oldWidget);
+  @override
+  void dispose() {
+    super.dispose();
+
+    _animationController.dispose();
   }
 
   @override
@@ -79,7 +86,7 @@ class _ColorSliderState extends State<ColorSlider>
           child: Text(
             widget.colorName[0],
             style: TextStyle(
-              color: Colors.white.withOpacity(.6),
+              color: contrastColor.withOpacity(.4),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -105,6 +112,6 @@ class _ColorSliderState extends State<ColorSlider>
     );
   }
 
-  Color contrastColor(Color color) =>
-      color.computeLuminance() > .5 ? Colors.black : Colors.white;
+  Color get contrastColor =>
+      widget.color.computeLuminance() > .5 ? Colors.black : Colors.white;
 }
