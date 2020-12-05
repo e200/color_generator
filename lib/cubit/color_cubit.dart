@@ -12,21 +12,21 @@ class ColorCubit extends Cubit<ColorState> {
   ColorCubit({this.coolor}) : super(ColorState.initial());
 
   updateRed(int red) {
-    final _newColor = state.color.withRed(red);
+    final _color = state.color.withRed(red);
 
-    _updateColor(_newColor);
+    _updateColor(_color);
   }
 
   updateGreen(int green) {
-    final _newColor = state.color.withGreen(green);
+    final _color = state.color.withGreen(green);
 
-    _updateColor(_newColor);
+    _updateColor(_color);
   }
 
   updateBlue(int blue) {
-    final _newColor = state.color.withBlue(blue);
+    final _color = state.color.withBlue(blue);
 
-    _updateColor(_newColor);
+    _updateColor(_color);
   }
 
   updateHexadecimal(String hexadecimal) {
