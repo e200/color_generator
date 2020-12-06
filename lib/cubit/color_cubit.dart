@@ -14,28 +14,28 @@ class ColorCubit extends Cubit<ColorState> {
   updateRed(int red) {
     final _color = state.color.withRed(red);
 
-    _updateColor(_color);
+    updateColor(_color);
   }
 
   updateGreen(int green) {
     final _color = state.color.withGreen(green);
 
-    _updateColor(_color);
+    updateColor(_color);
   }
 
   updateBlue(int blue) {
     final _color = state.color.withBlue(blue);
 
-    _updateColor(_color);
+    updateColor(_color);
   }
 
   updateHexadecimal(String hexadecimal) {
     final _color = coolor.fromHexadecimal(hexadecimal);
 
-    _updateColor(_color);
+    updateColor(_color);
   }
 
-  _updateColor(Color color) {
+  updateColor(Color color) {
     emit(ColorState.color(color));
   }
 }
