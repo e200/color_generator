@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TopBar extends StatelessWidget {
@@ -18,6 +19,8 @@ class TopBar extends StatelessWidget {
             icon: Icon(Icons.camera_alt_outlined),
             onPressed: () async {
               final _source = await _getImageSource(context);
+
+              final _image = await _getImage(context, _source);
             },
           ),
           /* IconButton(
@@ -28,6 +31,32 @@ class TopBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _getImage(BuildContext context, ImageSource source) async {
+    if (source != null) {
+      final _imagePicker = ImagePicker();
+
+      try {
+        await _imagePicker.getImage(source: source);
+      } on PlatformException catch (_) {
+        final _snackbar = SnackBar(
+          content: Text('Permission to read gallery denied'),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 5),
+          action: SnackBarAction(
+            label: 'Try again',
+            textColor: Colors.white,
+            onPressed: () {
+              _getImage(context, source);
+            },
+          ),
+        );
+
+        Scaffold.of(context).showSnackBar(_snackbar);
+      }
+    }
   }
 
   Future<ImageSource> _getImageSource(BuildContext context) async {
