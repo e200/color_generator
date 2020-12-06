@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:color_generator/widgets/color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:pixel_color_picker/pixel_color_picker.dart';
 
 class ImageColorPickerScreen extends StatefulWidget {
   final File image;
@@ -22,7 +22,7 @@ class _ImageColorPickerScreenState extends State<ImageColorPickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
+        backgroundColor: selectedColor ?? Colors.white,
         child: Icon(
           Icons.copy,
           color: Colors.black,
@@ -31,10 +31,12 @@ class _ImageColorPickerScreenState extends State<ImageColorPickerScreen> {
           Navigator.pop(context, selectedColor);
         },
       ),
-      body: ColorPicker(
-        image: widget.image,
-        onSelectColor: (color) {
-          selectedColor = color;
+      body: PixelColorPicker(
+        child: Image.file(widget.image),
+        onChanged: (color) {
+          setState(() {
+            selectedColor = color;
+          });
         },
       ),
     );

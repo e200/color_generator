@@ -410,6 +410,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  pixel_color_picker:
+    dependency: "direct main"
+    description:
+      name: pixel_color_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -578,4 +585,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.10.0 <2.11.0"
-  flutter: ">=1.16.0 <2.0.0"
+  flutter: ">=1.17.0 <2.0.0"
