@@ -18,10 +18,9 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 TopBar(),
-                Center(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
