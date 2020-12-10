@@ -32,7 +32,10 @@ class _ImageColorPickerScreenState extends State<ImageColorPickerScreen> {
         },
       ),
       body: PixelColorPicker(
-        child: Image.file(widget.image),
+        child: Image.file(
+          widget.image,
+          filterQuality: FilterQuality.low,
+        ),
         onChanged: (color) {
           setState(() {
             selectedColor = color;
