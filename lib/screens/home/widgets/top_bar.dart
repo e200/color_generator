@@ -14,13 +14,19 @@ class TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+    final _color = context.watch<ColorCubit>().state.color;
+
+    return Container(
+      margin: EdgeInsets.only(top: 30),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.black.withOpacity(.1),
+      ),
+      child: Wrap(
         children: [
           IconButton(
-            color: Colors.grey.withOpacity(.4),
+            tooltip: 'Pick colors from your photos or camera',
+            color: contrastColor(_color).withOpacity(.4),
             icon: Icon(Icons.camera_alt_outlined),
             onPressed: () async {
               final _source = await _getImageSource(context);
@@ -45,11 +51,34 @@ class TopBar extends StatelessWidget {
               }
             },
           ),
-          /* IconButton(
-            color: Colors.grey.withOpacity(.4),
-            icon: Icon(Icons.settings_outlined),
+          IconButton(
+            tooltip: 'Reset color values',
+            color: contrastColor(_color).withOpacity(.4),
+            icon: Icon(Icons.refresh_outlined),
+            onPressed: () {
+              context.read<ColorCubit>().updateColor(Colors.white);
+            },
+          ),
+          IconButton(
+            tooltip: 'Generates a random color',
+            color: contrastColor(_color).withOpacity(.4),
+            icon: Icon(Icons.shuffle_outlined),
+            onPressed: () {
+              context.read<ColorCubit>().updateWithRandomColor();
+            },
+          ),
+          IconButton(
+            tooltip: 'Copy to clipboard',
+            color: contrastColor(_color).withOpacity(.4),
+            icon: Icon(Icons.copy_outlined),
             onPressed: () {},
-          ), */
+          ),
+          IconButton(
+            tooltip: 'About this app',
+            color: contrastColor(_color).withOpacity(.4),
+            icon: Icon(Icons.info_outline),
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -84,7 +113,10 @@ class TopBar extends StatelessWidget {
     return _option;
   }
 
-  // TODO: Move this code into its own Cubit
+  Color contrastColor(Color color) =>
+      color.computeLuminance() > .5 ? Colors.black : Colors.white;
+
+  // TODO: Move this code to its own Cubit
   Future<File> _getImage(BuildContext context, ImageSource source) async {
     if (source != null) {
       final _imagePicker = ImagePicker();
