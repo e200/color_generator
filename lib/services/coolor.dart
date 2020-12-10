@@ -37,7 +37,7 @@ class Coolor implements ICoolor {
 
   @override
   Color fromRGB(int red, int green, int blue) {
-    throw UnimplementedError();
+    return Color.fromARGB(1, red, green, blue);
   }
 }
 
