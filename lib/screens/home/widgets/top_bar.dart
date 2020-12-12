@@ -68,12 +68,6 @@ class TopBar extends StatelessWidget {
             },
           ),
           IconButton(
-            tooltip: 'Copy to clipboard',
-            color: contrastColor(_color).withOpacity(.4),
-            icon: Icon(Icons.copy_outlined),
-            onPressed: () {},
-          ),
-          IconButton(
             tooltip: 'About this app',
             color: contrastColor(_color).withOpacity(.4),
             icon: Icon(Icons.info_outline),
@@ -116,7 +110,7 @@ class TopBar extends StatelessWidget {
   Color contrastColor(Color color) =>
       color.computeLuminance() > .5 ? Colors.black : Colors.white;
 
-  // TODO: Move this code to its own Cubit
+  // TODO: Move this logic out of this widget
   Future<File> _getImage(BuildContext context, ImageSource source) async {
     if (source != null) {
       final _imagePicker = ImagePicker();
