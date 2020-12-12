@@ -28,7 +28,7 @@ class TopBar extends StatelessWidget {
       child: Wrap(
         children: [
           IconButton(
-            tooltip: 'Pick colors from your photos or camera',
+            tooltip: 'Pick colors from photos or camera',
             color: _contrastedBackgroundColor,
             icon: Icon(Icons.camera_alt_outlined),
             onPressed: () async {
