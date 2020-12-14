@@ -7,7 +7,9 @@ class ColorPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final _color = context.watch<ColorCubit>().state.color;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
       color: _color.withOpacity(1),
     );
   }

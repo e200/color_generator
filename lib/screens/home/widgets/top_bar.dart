@@ -1,11 +1,13 @@
 import 'dart:io';
 
-import 'package:color_generator/cubit/color_cubit.dart';
-import 'package:color_generator/screens/image_color_picker/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:color_generator/cubit/color_cubit.dart';
+import 'package:color_generator/screens/image_color_picker/screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({
@@ -15,6 +17,7 @@ class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _color = context.watch<ColorCubit>().state.color;
+    final _contrastedBackgroundColor = contrastColor(_color).withOpacity(.4);
 
     return Container(
       margin: EdgeInsets.only(top: 30),
@@ -25,8 +28,8 @@ class TopBar extends StatelessWidget {
       child: Wrap(
         children: [
           IconButton(
-            tooltip: 'Pick colors from your photos or camera',
-            color: contrastColor(_color).withOpacity(.4),
+            tooltip: 'Pick colors from photos or camera',
+            color: _contrastedBackgroundColor,
             icon: Icon(Icons.camera_alt_outlined),
             onPressed: () async {
               final _source = await _getImageSource(context);
@@ -53,7 +56,7 @@ class TopBar extends StatelessWidget {
           ),
           IconButton(
             tooltip: 'Reset color values',
-            color: contrastColor(_color).withOpacity(.4),
+            color: _contrastedBackgroundColor,
             icon: Icon(Icons.refresh_outlined),
             onPressed: () {
               context.read<ColorCubit>().updateColor(Colors.white);
@@ -61,23 +64,17 @@ class TopBar extends StatelessWidget {
           ),
           IconButton(
             tooltip: 'Generates a random color',
-            color: contrastColor(_color).withOpacity(.4),
+            color: _contrastedBackgroundColor,
             icon: Icon(Icons.shuffle_outlined),
             onPressed: () {
               context.read<ColorCubit>().updateWithRandomColor();
             },
           ),
           IconButton(
-            tooltip: 'Copy to clipboard',
-            color: contrastColor(_color).withOpacity(.4),
-            icon: Icon(Icons.copy_outlined),
-            onPressed: () {},
-          ),
-          IconButton(
             tooltip: 'About this app',
-            color: contrastColor(_color).withOpacity(.4),
+            color: _contrastedBackgroundColor,
             icon: Icon(Icons.info_outline),
-            onPressed: () {},
+            onPressed: () => _showAboutDialog(context),
           ),
         ],
       ),
@@ -116,7 +113,7 @@ class TopBar extends StatelessWidget {
   Color contrastColor(Color color) =>
       color.computeLuminance() > .5 ? Colors.black : Colors.white;
 
-  // TODO: Move this code to its own Cubit
+  // TODO: Move this logic out of this widget
   Future<File> _getImage(BuildContext context, ImageSource source) async {
     if (source != null) {
       final _imagePicker = ImagePicker();
@@ -145,5 +142,38 @@ class TopBar extends StatelessWidget {
     }
 
     return null;
+  }
+
+  _showAboutDialog(BuildContext context) {
+    showAboutDialog(
+      context: context,
+      applicationVersion: 'v0.0.2',
+      applicationIcon: Image.asset(
+        'assets/logo.png',
+        width: 50,
+      ),
+      children: [
+        Wrap(
+          children: [
+            Text('With '),
+            Icon(
+              Icons.favorite,
+              size: 20,
+              color: Colors.red,
+            ),
+            Text(' by '),
+            GestureDetector(
+              child: Text(
+                'Eleandro Duzentos',
+                style: TextStyle(color: Colors.blue),
+              ),
+              onTap: () {
+                launch('https://github.com/e200');
+              },
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }

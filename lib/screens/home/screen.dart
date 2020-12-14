@@ -10,43 +10,48 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          ColorPreview(),
-          SafeArea(
-            child: Column(
-              children: [
-                TopBar(),
-                Expanded(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          BlocBuilder<ColorCubit, ColorState>(
-                            builder: (context, state) {
-                              return HexadecimalColorTextField(
-                                color: state.color,
-                                onChanged: (String hexadecimal) {
-                                  context
-                                      .read<ColorCubit>()
-                                      .updateHexadecimal(hexadecimal);
-                                },
-                              );
-                            },
-                          ),
-                          SizedBox(height: 60),
-                          ColorSliders(),
-                        ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            ColorPreview(),
+            SafeArea(
+              child: Column(
+                children: [
+                  TopBar(),
+                  Expanded(
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            BlocBuilder<ColorCubit, ColorState>(
+                              builder: (context, state) {
+                                return HexadecimalColorTextField(
+                                  color: state.color,
+                                  onChanged: (String hexadecimal) {
+                                    context
+                                        .read<ColorCubit>()
+                                        .updateHexadecimal(hexadecimal);
+                                  },
+                                );
+                              },
+                            ),
+                            SizedBox(height: 60),
+                            ColorSliders(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

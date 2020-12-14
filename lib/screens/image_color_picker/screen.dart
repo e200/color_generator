@@ -24,7 +24,7 @@ class _ImageColorPickerScreenState extends State<ImageColorPickerScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: selectedColor ?? Colors.white,
         child: Icon(
-          Icons.copy,
+          Icons.palette_outlined,
           color: Colors.black,
         ),
         onPressed: () {
