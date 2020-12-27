@@ -9,8 +9,8 @@ import 'package:color_generator/cubit/color_cubit.dart';
 import 'package:color_generator/screens/image_color_picker/screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TopBar extends StatelessWidget {
-  const TopBar({
+class Toolbar extends StatelessWidget {
+  const Toolbar({
     Key key,
   }) : super(key: key);
 
