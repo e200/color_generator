@@ -39,9 +39,10 @@ class HomeScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        SizedBox(height: 60),
+                        const SizedBox(height: 60),
                         ColorSliders(),
-                        Toolbar(),
+                        const SizedBox(height: 15),
+                        const Toolbar(),
                       ],
                     ),
                   ),
