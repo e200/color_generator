@@ -8,42 +8,45 @@ class ColorSliders extends StatelessWidget {
   Widget build(BuildContext context) {
     final _color = context.watch<ColorCubit>().state.color;
 
-    return Row(
-      children: [
-        Expanded(
-          child: ColorSlider(
-            color: _color,
-            colorName: 'Red',
-            activeColor: Colors.red,
-            value: _color.red,
-            onChanged: (value) {
-              context.read<ColorCubit>().updateRed(value);
-            },
+    return SizedBox(
+      width: 250,
+      child: Row(
+        children: [
+          Expanded(
+            child: ColorSlider(
+              color: _color,
+              colorName: 'Red',
+              activeColor: Colors.red,
+              value: _color.red,
+              onChanged: (value) {
+                context.read<ColorCubit>().updateRed(value);
+              },
+            ),
           ),
-        ),
-        Expanded(
-          child: ColorSlider(
-            color: _color,
-            colorName: 'Green',
-            activeColor: Colors.green,
-            value: _color.green,
-            onChanged: (value) {
-              context.read<ColorCubit>().updateGreen(value);
-            },
+          Expanded(
+            child: ColorSlider(
+              color: _color,
+              colorName: 'Green',
+              activeColor: Colors.green,
+              value: _color.green,
+              onChanged: (value) {
+                context.read<ColorCubit>().updateGreen(value);
+              },
+            ),
           ),
-        ),
-        Expanded(
-          child: ColorSlider(
-            color: _color,
-            colorName: 'Blue',
-            activeColor: Colors.blue,
-            value: _color.blue,
-            onChanged: (value) {
-              context.read<ColorCubit>().updateBlue(value);
-            },
+          Expanded(
+            child: ColorSlider(
+              color: _color,
+              colorName: 'Blue',
+              activeColor: Colors.blue,
+              value: _color.blue,
+              onChanged: (value) {
+                context.read<ColorCubit>().updateBlue(value);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
