@@ -81,7 +81,7 @@ class _ColorSliderState extends State<ColorSlider>
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Colors.black.withOpacity(.1),
+            color: Colors.black.withOpacity(.075),
           ),
           child: Text(
             widget.colorName[0],

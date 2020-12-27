@@ -23,7 +23,7 @@ class Toolbar extends StatelessWidget {
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: Colors.black.withOpacity(.1),
+        color: Colors.black.withOpacity(.075),
       ),
       child: Wrap(
         children: [
