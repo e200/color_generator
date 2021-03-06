@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class HexadecimalColorTextField extends StatelessWidget {
   final Color color;
-  final Function(String hexadecimal) onChanged;
+  final Function(String hexadecimal)? onChanged;
 
   const HexadecimalColorTextField({
-    Key key,
-    this.color,
+    Key? key,
+    required this.color,
     this.onChanged,
   }) : super(key: key);
 

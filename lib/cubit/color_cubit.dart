@@ -11,7 +11,7 @@ part 'color_cubit.freezed.dart';
 class ColorCubit extends Cubit<ColorState> {
   final ICoolor coolor;
 
-  ColorCubit({this.coolor}) : super(ColorState.initial());
+  ColorCubit({required this.coolor}) : super(ColorState.initial());
 
   updateRed(int red) {
     final _color = state.color.withRed(red);

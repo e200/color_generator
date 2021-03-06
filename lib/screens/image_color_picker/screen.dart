@@ -7,8 +7,8 @@ class ImageColorPickerScreen extends StatefulWidget {
   final File image;
 
   const ImageColorPickerScreen({
-    Key key,
-    this.image,
+    Key? key,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class ImageColorPickerScreen extends StatefulWidget {
 }
 
 class _ImageColorPickerScreenState extends State<ImageColorPickerScreen> {
-  Color selectedColor;
+  Color? selectedColor;
 
   @override
   Widget build(BuildContext context) {

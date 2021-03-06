@@ -7,14 +7,14 @@ class ColorSlider extends StatefulWidget {
   final Color color;
   final int value;
   final Color activeColor;
-  final Function(int value) onChanged;
+  final Function(int value)? onChanged;
 
   const ColorSlider({
-    Key key,
-    this.color,
-    this.colorName,
-    this.value,
-    this.activeColor,
+    Key? key,
+    required this.color,
+    required this.colorName,
+    required this.value,
+    required this.activeColor,
     this.onChanged,
   }) : super(key: key);
 
@@ -24,8 +24,8 @@ class ColorSlider extends StatefulWidget {
 
 class _ColorSliderState extends State<ColorSlider>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<int> _animation;
+  late AnimationController _animationController;
+  late Animation<int> _animation;
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class _ColorSliderState extends State<ColorSlider>
         ColorTextField(
           color: widget.color,
           value: _animation.value.toString(),
-          onChanged: (value) => widget.onChanged(int.parse(value)),
+          onChanged: (value) => widget.onChanged?.call(int.parse(value)),
         ),
         SizedBox(height: 15),
         RotatedBox(
@@ -105,7 +105,7 @@ class _ColorSliderState extends State<ColorSlider>
             thumbColor: widget.activeColor,
             activeColor: widget.activeColor.withOpacity(.5),
             value: _animation.value.toDouble(),
-            onChanged: (value) => widget.onChanged(value.toInt()),
+            onChanged: (value) => widget.onChanged?.call(value.toInt()),
           ),
         ),
       ],

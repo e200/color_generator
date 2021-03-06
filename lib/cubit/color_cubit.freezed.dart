@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'color_cubit.dart';
 
@@ -9,18 +9,19 @@ part of 'color_cubit.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$ColorStateTearOff {
   const _$ColorStateTearOff();
 
-// ignore: unused_element
-  _Initial initial([Color color = const Color(0x00FFFFFF)]) {
+  _Initial initial([Color color = const Color(4294967295)]) {
     return _Initial(
       color,
     );
   }
 
-// ignore: unused_element
   _Changed color(Color color) {
     return _Changed(
       color,
@@ -29,37 +30,42 @@ class _$ColorStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $ColorState = _$ColorStateTearOff();
 
 /// @nodoc
 mixin _$ColorState {
-  Color get color;
+  Color get color => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(Color color),
-    @required TResult color(Color color),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function(Color color) initial,
+    required TResult Function(Color color) color,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(Color color),
-    TResult color(Color color),
-    @required TResult orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Color color)? initial,
+    TResult Function(Color color)? color,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(_Initial value),
-    @required TResult color(_Changed value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Changed value) color,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(_Initial value),
-    TResult color(_Changed value),
-    @required TResult orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Changed value)? color,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
-  $ColorStateCopyWith<ColorState> get copyWith;
+  @JsonKey(ignore: true)
+  $ColorStateCopyWith<ColorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -80,7 +86,7 @@ class _$ColorStateCopyWithImpl<$Res> implements $ColorStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object color = freezed,
+    Object? color = freezed,
   }) {
     return _then(_value.copyWith(
       color: color == freezed ? _value.color : color as Color,
@@ -107,7 +113,7 @@ class __$InitialCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object color = freezed,
+    Object? color = freezed,
   }) {
     return _then(_Initial(
       color == freezed ? _value.color : color as Color,
@@ -117,10 +123,9 @@ class __$InitialCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Initial implements _Initial {
-  const _$_Initial([this.color = const Color(0x00FFFFFF)])
-      : assert(color != null);
+  const _$_Initial([this.color = const Color(4294967295)]);
 
-  @JsonKey(defaultValue: const Color(0x00FFFFFF))
+  @JsonKey(defaultValue: const Color(4294967295))
   @override
   final Color color;
 
@@ -141,29 +146,27 @@ class _$_Initial implements _Initial {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(color);
 
+  @JsonKey(ignore: true)
   @override
   _$InitialCopyWith<_Initial> get copyWith =>
       __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(Color color),
-    @required TResult color(Color color),
+  TResult when<TResult extends Object?>({
+    required TResult Function(Color color) initial,
+    required TResult Function(Color color) color,
   }) {
-    assert(initial != null);
-    assert(color != null);
     return initial(this.color);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(Color color),
-    TResult color(Color color),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Color color)? initial,
+    TResult Function(Color color)? color,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this.color);
     }
@@ -172,23 +175,20 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(_Initial value),
-    @required TResult color(_Changed value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Changed value) color,
   }) {
-    assert(initial != null);
-    assert(color != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(_Initial value),
-    TResult color(_Changed value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Changed value)? color,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -200,9 +200,11 @@ abstract class _Initial implements ColorState {
   const factory _Initial([Color color]) = _$_Initial;
 
   @override
-  Color get color;
+  Color get color => throw _privateConstructorUsedError;
   @override
-  _$InitialCopyWith<_Initial> get copyWith;
+  @JsonKey(ignore: true)
+  _$InitialCopyWith<_Initial> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -224,7 +226,7 @@ class __$ChangedCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object color = freezed,
+    Object? color = freezed,
   }) {
     return _then(_Changed(
       color == freezed ? _value.color : color as Color,
@@ -234,7 +236,7 @@ class __$ChangedCopyWithImpl<$Res> extends _$ColorStateCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Changed implements _Changed {
-  const _$_Changed(this.color) : assert(color != null);
+  const _$_Changed(this.color);
 
   @override
   final Color color;
@@ -256,29 +258,27 @@ class _$_Changed implements _Changed {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(color);
 
+  @JsonKey(ignore: true)
   @override
   _$ChangedCopyWith<_Changed> get copyWith =>
       __$ChangedCopyWithImpl<_Changed>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult initial(Color color),
-    @required TResult color(Color color),
+  TResult when<TResult extends Object?>({
+    required TResult Function(Color color) initial,
+    required TResult Function(Color color) color,
   }) {
-    assert(initial != null);
-    assert(color != null);
     return color(this.color);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult initial(Color color),
-    TResult color(Color color),
-    @required TResult orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Color color)? initial,
+    TResult Function(Color color)? color,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (color != null) {
       return color(this.color);
     }
@@ -287,23 +287,20 @@ class _$_Changed implements _Changed {
 
   @override
   @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult initial(_Initial value),
-    @required TResult color(_Changed value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Changed value) color,
   }) {
-    assert(initial != null);
-    assert(color != null);
     return color(this);
   }
 
   @override
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult initial(_Initial value),
-    TResult color(_Changed value),
-    @required TResult orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Changed value)? color,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (color != null) {
       return color(this);
     }
@@ -315,7 +312,9 @@ abstract class _Changed implements ColorState {
   const factory _Changed(Color color) = _$_Changed;
 
   @override
-  Color get color;
+  Color get color => throw _privateConstructorUsedError;
   @override
-  _$ChangedCopyWith<_Changed> get copyWith;
+  @JsonKey(ignore: true)
+  _$ChangedCopyWith<_Changed> get copyWith =>
+      throw _privateConstructorUsedError;
 }

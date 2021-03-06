@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class Toolbar extends StatelessWidget {
   const Toolbar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -81,7 +81,7 @@ class Toolbar extends StatelessWidget {
     );
   }
 
-  Future<ImageSource> _getImageSource(BuildContext context) async {
+  Future<ImageSource?> _getImageSource(BuildContext context) async {
     final _option = await showModalBottomSheet<ImageSource>(
       context: context,
       builder: (BuildContext context) {
@@ -114,14 +114,14 @@ class Toolbar extends StatelessWidget {
       color.computeLuminance() > .5 ? Colors.black : Colors.white;
 
   // TODO: Move this logic out of this widget
-  Future<File> _getImage(BuildContext context, ImageSource source) async {
+  Future<File?> _getImage(BuildContext context, ImageSource? source) async {
     if (source != null) {
       final _imagePicker = ImagePicker();
 
       try {
         final _pickedImage = await _imagePicker.getImage(source: source);
 
-        return File(_pickedImage.path);
+        return _pickedImage != null ? File(_pickedImage.path) : null;
       } on PlatformException catch (_) {
         final _snackbar = SnackBar(
           content: Text('Permission to read gallery denied'),
@@ -137,7 +137,7 @@ class Toolbar extends StatelessWidget {
           ),
         );
 
-        Scaffold.of(context).showSnackBar(_snackbar);
+        ScaffoldMessenger.of(context).showSnackBar(_snackbar);
       }
     }
 

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class ColorTextField extends StatefulWidget {
   final Color color;
   final String value;
-  final double fontSize;
-  final Function(String value) onChanged;
+  final double? fontSize;
+  final Function(String value)? onChanged;
 
   const ColorTextField({
-    Key key,
-    this.color,
-    this.value,
+    Key? key,
+    required this.color,
+    required this.value,
     this.fontSize,
     this.onChanged,
   }) : super(key: key);
