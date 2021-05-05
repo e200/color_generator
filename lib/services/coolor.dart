@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -39,6 +40,17 @@ class Coolor implements ICoolor {
   Color fromRGB(int red, int green, int blue) {
     return Color.fromARGB(1, red, green, blue);
   }
+
+  @override
+  Color random() {
+    final _random = Random();
+
+    final _red = _random.nextInt(255);
+    final _green = _random.nextInt(255);
+    final _blue = _random.nextInt(255);
+
+    return fromRGB(_red, _green, _blue);
+  }
 }
 
 abstract class ICoolor {
@@ -46,4 +58,5 @@ abstract class ICoolor {
   Color fromHSL(double alpha, double hue, double saturation, double lightness);
   Color fromRGB(int red, int green, int blue);
   Color fromHexadecimal(String hexadecimal);
+  Color random();
 }
