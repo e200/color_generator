@@ -2,8 +2,15 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final coolorProvider = Provider((ref) => Coolor(random: Random()));
 
 class Coolor implements ICoolor {
+  final Random random;
+
+  Coolor({required this.random});
+
   @override
   Color complementary(Color color) {
     return Color.fromRGBO(
@@ -42,12 +49,10 @@ class Coolor implements ICoolor {
   }
 
   @override
-  Color random() {
-    final _random = Random();
-
-    final _red = _random.nextInt(255);
-    final _green = _random.nextInt(255);
-    final _blue = _random.nextInt(255);
+  Color randomColor() {
+    final _red = random.nextInt(255);
+    final _green = random.nextInt(255);
+    final _blue = random.nextInt(255);
 
     return fromRGB(_red, _green, _blue);
   }
@@ -58,5 +63,5 @@ abstract class ICoolor {
   Color fromHSL(double alpha, double hue, double saturation, double lightness);
   Color fromRGB(int red, int green, int blue);
   Color fromHexadecimal(String hexadecimal);
-  Color random();
+  Color randomColor();
 }

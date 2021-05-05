@@ -1,11 +1,10 @@
 import 'dart:io';
 
+import 'package:color_generator/modules/color/color_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:color_generator/cubit/color_cubit.dart';
 import 'package:color_generator/screens/image_color_picker/screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,68 +15,73 @@ class Toolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _color = context.watch<ColorCubit>().state.color;
-    final _contrastedBackgroundColor = contrastColor(_color).withOpacity(.4);
+    return Consumer(
+      builder: (context, watch, child) {
+        final _color = watch(colorNotifier).color;
+        final _contrastedBackgroundColor =
+            contrastColor(_color).withOpacity(.4);
 
-    return Container(
-      margin: EdgeInsets.only(top: 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.black.withOpacity(.075),
-      ),
-      child: Wrap(
-        children: [
-          IconButton(
-            tooltip: 'Pick colors from photos or camera',
-            color: _contrastedBackgroundColor,
-            icon: Icon(Icons.camera_alt_outlined),
-            onPressed: () async {
-              final _source = await _getImageSource(context);
+        return Container(
+          margin: EdgeInsets.only(top: 30),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.black.withOpacity(.075),
+          ),
+          child: Wrap(
+            children: [
+              IconButton(
+                tooltip: 'Pick colors from photos or camera',
+                color: _contrastedBackgroundColor,
+                icon: Icon(Icons.camera_alt_outlined),
+                onPressed: () async {
+                  final _source = await _getImageSource(context);
 
-              final _image = await _getImage(context, _source);
+                  final _image = await _getImage(context, _source);
 
-              if (_image != null) {
-                final _color = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ImageColorPickerScreen(
-                        image: _image,
-                      );
-                    },
-                  ),
-                );
+                  if (_image != null) {
+                    final _color = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ImageColorPickerScreen(
+                            image: _image,
+                          );
+                        },
+                      ),
+                    );
 
-                if (_color != null) {
-                  context.read<ColorCubit>().updateColor(_color);
-                }
-              }
-            },
+                    if (_color != null) {
+                      context.read(colorNotifier.notifier).updateColor(_color);
+                    }
+                  }
+                },
+              ),
+              IconButton(
+                tooltip: 'Reset color values',
+                color: _contrastedBackgroundColor,
+                icon: Icon(Icons.refresh_outlined),
+                onPressed: () {
+                  context.read(colorNotifier.notifier).updateColor(Colors.white);
+                },
+              ),
+              IconButton(
+                tooltip: 'Generates a random color',
+                color: _contrastedBackgroundColor,
+                icon: Icon(Icons.shuffle_outlined),
+                onPressed: () {
+                  context.read(colorNotifier.notifier).updateWithRandomColor();
+                },
+              ),
+              IconButton(
+                tooltip: 'About this app',
+                color: _contrastedBackgroundColor,
+                icon: Icon(Icons.info_outline),
+                onPressed: () => _showAboutDialog(context),
+              ),
+            ],
           ),
-          IconButton(
-            tooltip: 'Reset color values',
-            color: _contrastedBackgroundColor,
-            icon: Icon(Icons.refresh_outlined),
-            onPressed: () {
-              context.read<ColorCubit>().updateColor(Colors.white);
-            },
-          ),
-          IconButton(
-            tooltip: 'Generates a random color',
-            color: _contrastedBackgroundColor,
-            icon: Icon(Icons.shuffle_outlined),
-            onPressed: () {
-              context.read<ColorCubit>().updateWithRandomColor();
-            },
-          ),
-          IconButton(
-            tooltip: 'About this app',
-            color: _contrastedBackgroundColor,
-            icon: Icon(Icons.info_outline),
-            onPressed: () => _showAboutDialog(context),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -140,8 +144,6 @@ class Toolbar extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(_snackbar);
       }
     }
-
-    return null;
   }
 
   _showAboutDialog(BuildContext context) {

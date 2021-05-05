@@ -1,16 +1,16 @@
-import 'package:color_generator/cubit/color_cubit.dart';
+import 'package:color_generator/modules/color/color_notifier.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ColorPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _color = context.watch<ColorCubit>().state.color;
-
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.ease,
-      color: _color.withOpacity(1),
-    );
+    return Consumer(builder: (context, watch, _) {
+      return AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+        color: watch(colorNotifier).color.withOpacity(1),
+      );
+    });
   }
 }
