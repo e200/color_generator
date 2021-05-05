@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:color_generator/services/coolor.dart';
 import 'package:flutter/material.dart';
@@ -38,13 +36,7 @@ class ColorCubit extends Cubit<ColorState> {
   }
 
   updateWithRandomColor() {
-    final _random = Random();
-
-    final _red = _random.nextInt(255);
-    final _green = _random.nextInt(255);
-    final _blue = _random.nextInt(255);
-
-    final _color = coolor.fromRGB(_red, _green, _blue);
+    final _color = coolor.random();
 
     updateColor(_color);
   }
