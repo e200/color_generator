@@ -1,6 +1,6 @@
 # color_generator
 
-A Flutter color generator app built with Cubit + Freezed
+A Flutter color generator app initially built with Cubit + Freezed, now migrated to Riverpod.
 
 ## Printscreen
 
