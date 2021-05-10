@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final coolorProvider = Provider((ref) => Coolor(random: Random()));
 
 class Coolor implements ICoolor {
-  final Random random;
+  final Random? random;
 
-  Coolor({required this.random});
+  Coolor({this.random});
 
   @override
   Color complementary(Color color) {
@@ -50,9 +50,9 @@ class Coolor implements ICoolor {
 
   @override
   Color randomColor() {
-    final _red = random.nextInt(255);
-    final _green = random.nextInt(255);
-    final _blue = random.nextInt(255);
+    final _red = random!.nextInt(255);
+    final _green = random!.nextInt(255);
+    final _blue = random!.nextInt(255);
 
     return fromRGB(_red, _green, _blue);
   }
