@@ -33,9 +33,7 @@ class _ColorSliderState extends State<ColorSlider>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(
-        milliseconds: 300,
-      ),
+      duration: Duration(milliseconds: 300),
     );
 
     _setupAnimation(0, widget.value);
@@ -45,13 +43,9 @@ class _ColorSliderState extends State<ColorSlider>
     _animation = IntTween(begin: from, end: to).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Curves.ease,
+        curve: Curves.ease
       ),
     );
-
-    _animationController.addListener(() {
-      setState(() {});
-    });
 
     _animationController.forward(from: 0);
   }
@@ -67,9 +61,9 @@ class _ColorSliderState extends State<ColorSlider>
 
   @override
   void dispose() {
-    super.dispose();
-
     _animationController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -91,22 +85,30 @@ class _ColorSliderState extends State<ColorSlider>
             ),
           ),
         ),
-        ColorTextField(
-          color: widget.color,
-          value: _animation.value.toString(),
-          onChanged: (value) => widget.onChanged?.call(int.parse(value)),
-        ),
+        AnimatedBuilder(
+            animation: _animation,
+            builder: (context, _) {
+              return ColorTextField(
+                color: widget.color,
+                value: _animation.value.toString(),
+                onChanged: (value) => widget.onChanged?.call(int.parse(value)),
+              );
+            }),
         SizedBox(height: 15),
         RotatedBox(
           quarterTurns: 3,
-          child: CupertinoSlider(
-            min: 0,
-            max: 255,
-            thumbColor: widget.activeColor,
-            activeColor: widget.activeColor.withOpacity(.5),
-            value: _animation.value.toDouble(),
-            onChanged: (value) => widget.onChanged?.call(value.toInt()),
-          ),
+          child: AnimatedBuilder(
+              animation: _animation,
+              builder: (context, snapshot) {
+                return CupertinoSlider(
+                  min: 0,
+                  max: 255,
+                  thumbColor: widget.activeColor,
+                  activeColor: widget.activeColor.withOpacity(.5),
+                  value: _animation.value.toDouble(),
+                  onChanged: (value) => widget.onChanged?.call(value.toInt()),
+                );
+              }),
         ),
       ],
     );
